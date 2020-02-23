@@ -11,9 +11,9 @@ jobs:
     - name: Build Image
       run: |
         docker build \
-          -t duczen/dropbox-docker:latest \
+          -t duczen/dropbox:latest \
           .
-    - name: Publish image to packages
+    - name: Publish image to DockerHub
       run: |
         docker login --username ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push duczen/dropbox-docker:latest
+        docker push duczen/dropbox:latest

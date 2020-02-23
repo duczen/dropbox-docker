@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: dropbox
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1000Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data/dropbox"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dropbox
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1000Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dropbox
+  labels:
+    app: dropbox
+  namespace: default
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: dropbox
+  template:
+    metadata:
+      labels:
+        app: dropbox
+    spec:
+      containers:
+      - name: dropbox
+        image: duczen/dropbox:latest
+        env:
+        - name: CONFIG_FILE
+          value: "/etc/pcloudsync/config.json"
+        volumeMounts:
+        - name: config
+          mountPath: /etc/pcloudsync/
+        - name: data
+          mountPath: /mnt/data
+      volumes:
+      - name: config
+        configMap:
+          name: pcloudsync
+      - name: data
+        persistentVolumeClaim:
+          claimName: pcloudsync
+      imagePullSecrets:
+      - name: regcred
