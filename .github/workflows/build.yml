@@ -1,0 +1,19 @@
+name: build
+
+on: [push]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Image
+      run: |
+        docker build \
+          -t duczen/dropbox-docker:latest \
+          .
+    - name: Publish image to packages
+      run: |
+        docker login --username ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker push duczen/dropbox-docker:latest
