@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-ENV DROPBOX_VERSION 91.4.548
+ENV DROPBOX_VERSION 92.4.382
 
 RUN adduser --system --disabled-login dropboxd \
     && apt-get update \
