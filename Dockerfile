@@ -1,13 +1,16 @@
-FROM ubuntu:latest
+FROM debian:10
 
 ENV DROPBOX_VERSION 92.4.382
 
 RUN adduser --system --disabled-login dropboxd \
     && apt-get update \
     && apt-get install -y wget sudo \
-    && cd /home/dropboxd \
+    && cd /tmp \
+    && mkdir /opt/dropbox \
     && wget -O - https://clientupdates.dropboxstatic.com/dbx-releng/client/dropbox-lnx.x86_64-$DROPBOX_VERSION.tar.gz | tar -xzf - \
-    && chown -R dropboxd /home/dropboxd/.dropbox-dist \
+    && mv .dropbox-dist/dropbox-lnx.x86_64-$DROPBOX_VERSION/* /opt/dropbox \
+    && install -dm0 /home/dropboxd/.dropbox-dist \
+    && chown -R dropboxd /home/dropboxd \
     && apt purge -y wget
 
 ADD entrypoint.sh /entrypoint.sh

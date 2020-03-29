@@ -2,4 +2,4 @@
 
 chown -R dropboxd: /home/dropboxd
 
-HOME=/home/dropboxd sudo -u dropboxd /home/dropboxd/.dropbox-dist/dropboxd
+sudo -u dropboxd /opt/dropbox/dropbox
