@@ -1,6 +1,9 @@
 name: build
 
-on: [push]
+on:
+  push:
+    tags:
+      - '*'
 
 jobs:
 
@@ -8,12 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Set common env vars
+      run: |
+        echo "::set-env name=IMAGE_TAG::$(echo $GITHUB_REF | cut -d '/' -f 3)"
+        echo "::set-env name=IMAGE_NAME::duczen/dropbox
     - name: Build Image
       run: |
         docker build \
-          -t duczen/dropbox:latest \
+          -t $IMAGE_NAME:$IMAGE_TAG \
+          -t $IMAGE_NAME:latest \
           .
     - name: Publish image to DockerHub
       run: |
         docker login --username ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push duczen/dropbox:latest
+        docker push $IMAGE_NAME:$IMAGE_TAG
+        docker push $IMAGE_NAME:latest
