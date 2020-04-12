@@ -4,7 +4,9 @@ ENV DROPBOX_VERSION 94.4.384
 
 RUN adduser --system --disabled-login dropboxd \
     && apt-get update \
-    && apt-get install -y wget sudo \
+    && apt-get install --no-install-recommends -y wget sudo ca-certificates \
+        libglib2.0 libglapi-mesa libxext6 libxdamage1 libxcb-glx0 libxcb-dri2-0 \
+        libxcb-dri3-0 libxcb-present0 libxcb-sync1 libxshmfence1 libxxf86vm1 \
     && cd /tmp \
     && mkdir /opt/dropbox \
     && wget -O - https://clientupdates.dropboxstatic.com/dbx-releng/client/dropbox-lnx.x86_64-$DROPBOX_VERSION.tar.gz | tar -xzf - \
@@ -14,4 +16,4 @@ RUN adduser --system --disabled-login dropboxd \
     && apt purge -y wget
 
 ADD entrypoint.sh /entrypoint.sh
-ENTRYPOINT /entrypoint.sh
+# ENTRYPOINT /entrypoint.sh
