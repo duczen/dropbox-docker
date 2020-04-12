@@ -16,4 +16,4 @@ RUN adduser --system --disabled-login dropboxd \
     && apt purge -y wget
 
 ADD entrypoint.sh /entrypoint.sh
-# ENTRYPOINT /entrypoint.sh
+ENTRYPOINT /entrypoint.sh
