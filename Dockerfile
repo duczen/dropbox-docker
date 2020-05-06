@@ -1,6 +1,6 @@
 FROM debian:10
 
-ENV DROPBOX_VERSION 95.4.441
+ENV DROPBOX_VERSION 96.4.172
 
 RUN adduser --system --disabled-login dropboxd \
     && apt-get update \
