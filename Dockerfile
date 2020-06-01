@@ -1,6 +1,6 @@
-FROM debian:10
+FROM debian:10.4-slim
 
-ENV DROPBOX_VERSION 97.4.467
+ENV DROPBOX_VERSION 98.4.158
 
 RUN adduser --system --disabled-login dropboxd \
     && apt-get update \
@@ -13,7 +13,8 @@ RUN adduser --system --disabled-login dropboxd \
     && mv .dropbox-dist/dropbox-lnx.x86_64-$DROPBOX_VERSION/* /opt/dropbox \
     && install -dm0 /home/dropboxd/.dropbox-dist \
     && chown -R dropboxd /home/dropboxd \
-    && apt purge -y wget
+    && apt purge -y wget \
+    && sudo apt autoremove -y
 
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT /entrypoint.sh
