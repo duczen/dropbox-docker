@@ -1,4 +1,4 @@
-FROM debian:10.4-slim
+FROM debian:10.5-slim
 
 ENV DROPBOX_VERSION 102.4.431
 
