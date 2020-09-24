@@ -28,7 +28,7 @@ jobs:
         docker push $IMAGE_NAME:latest
     - name: action-slack
       if: always()
-      uses: 8398a7/action-slack@v3.6.1
+      uses: 8398a7/action-slack@v3.7.0
       with:
         status: ${{ job.status }}
         fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
