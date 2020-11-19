@@ -13,8 +13,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Set common env vars
       run: |
-        echo "::set-env name=IMAGE_TAG::$(echo $GITHUB_REF | cut -d '/' -f 3)"
-        echo "::set-env name=IMAGE_NAME::duczen/dropbox"
+        echo "IMAGE_TAG=$(echo $GITHUB_REF | cut -d '/' -f 3)" >> $GITHUB_ENV
+        echo "IMAGE_NAME=duczen/dropbox" >> $GITHUB_ENV
     - name: Build Image
       run: |
         docker build \
