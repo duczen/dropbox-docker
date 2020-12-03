@@ -1,6 +1,6 @@
 FROM debian:10.6-slim
 
-ENV DROPBOX_VERSION 110.4.458
+ENV DROPBOX_VERSION 111.4.472
 
 RUN adduser --system --disabled-login dropboxd \
     && apt-get update \
